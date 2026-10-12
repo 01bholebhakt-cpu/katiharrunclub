@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   Activity,
   ArrowDownRight,
@@ -10,13 +11,31 @@ import {
   Footprints,
   MapPin,
   Menu,
-  Navigation,
   Play,
   Trophy,
   Users,
   X,
   Zap,
 } from "lucide-react";
+
+const MapView = dynamic(() => import("./MapView"), {
+  ssr: false,
+  loading: () => (
+    <div
+      style={{
+        height: 420,
+        display: "grid",
+        placeItems: "center",
+        background: "#10151a",
+        color: "#ff6b2c",
+        borderRadius: 12,
+        fontSize: 13,
+      }}
+    >
+      Loading Katihar map...
+    </div>
+  ),
+});
 
 const leaderboard = [
   { rank: 1, name: "Aman Kumar", area: "Katihar", distance: "42.8", change: "+2" },
@@ -33,7 +52,7 @@ export default function Home() {
 
   function startSession() {
     setNotice(
-      "GPS tracking aur account setup agle development step mein connect hoga."
+      "GPS tracking abhi connect nahi hai. Agle step mein real activity tracking add karenge."
     );
   }
 
@@ -115,29 +134,19 @@ export default function Home() {
         <div className="hero-visual" id="map">
           <div className="map-topline">
             <div>
-              <span className="mini-label">THE CITY GRID</span>
+              <span className="mini-label">EXPLORE YOUR CITY</span>
               <h2>Katihar, Bihar</h2>
             </div>
             <span className="map-status">
-              <span className="live-dot" /> CITY SPOTLIGHT
+              <span className="live-dot" /> INTERACTIVE MAP
             </span>
           </div>
 
-          <img
-            src="/katihar-run-club.png"
-            alt="Katihar Junction and local railway overbridge at night"
-            style={{
-              display: "block",
-              width: "100%",
-              height: "auto",
-              borderRadius: "12px",
-              marginBottom: "20px",
-            }}
-          />
+          <MapView />
 
           <div className="map-footer">
             <span><MapPin size={14} /> KATIHAR, BIHAR, INDIA</span>
-            <span>OUR CITY. OUR CLUB. <ArrowUpRight size={14} /></span>
+            <span>ZOOM · EXPLORE · DISCOVER</span>
           </div>
         </div>
       </section>
@@ -203,9 +212,11 @@ export default function Home() {
                   <small>{person.area}</small>
                 </span>
               </div>
+
               <strong className="distance-value">
                 {person.distance} <small>KM</small>
               </strong>
+
               <span className={person.change.startsWith("+") ? "rank-up" : "rank-down"}>
                 {person.change.startsWith("+") ? (
                   <ArrowUpRight size={15} />
