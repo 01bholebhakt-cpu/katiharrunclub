@@ -25,7 +25,11 @@ function FixMapSize() {
   return null;
 }
 
-function FollowLocation({ position }: { position: Position | null }) {
+function FollowLocation({
+  position,
+}: {
+  position: Position | null;
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -112,27 +116,28 @@ export default function MapView() {
         setGpsReady(true);
         setMessage("GPS connected · Activity recording");
 
-        if (lastPosition.current) {
-          const meters = getDistance(lastPosition.current, next);
-
-          // Ignore GPS jumps and tiny movements to reduce false distance.
-          if (meters >= 3 && meters <= 100) {
-            distanceRef.current += meters;
-            setDistance(distanceRef.current);
-            lastPosition.current = next;
-            setRoute((previous) => [...previous, next]);
-          } else if (meters > 100) {
-            lastPosition.current = next;
-          }
-        } else {
+        if (lastPosition.current === null) {
           lastPosition.current = next;
           setRoute([next]);
+          return;
+        }
+
+        const meters = getDistance(lastPosition.current, next);
+
+        // Ignore tiny movements and unusually large GPS jumps.
+        if (meters >= 3 && meters <= 100) {
+          distanceRef.current += meters;
+          setDistance(distanceRef.current);
+          lastPosition.current = next;
+          setRoute((previous) => [...previous, next]);
+        } else if (meters > 100) {
+          lastPosition.current = next;
         }
       },
       (error) => {
         const errors: Record<number, string> = {
           1: "Location permission denied. Allow location access in your browser.",
-          2: "GPS position unavailable. Try moving outdoors.",
+          2: "GPS unavailable. Try moving outdoors.",
           3: "GPS timed out. Please try again.",
         };
 
@@ -151,9 +156,10 @@ export default function MapView() {
   function finishRun() {
     stopGPS();
     setRunning(false);
+
     setMessage(
-      distance > 0
-        ? "Activity finished! Your summary is shown below."
+      distanceRef.current > 0
+        ? "Activity finished! Check your summary below."
         : "Activity stopped. No distance recorded."
     );
   }
@@ -164,6 +170,7 @@ export default function MapView() {
 
   const km = distance / 1000;
   const paceSeconds = km > 0 ? seconds / km : 0;
+
   const pace =
     km > 0
       ? `${Math.floor(paceSeconds / 60)}:${String(
@@ -175,6 +182,12 @@ export default function MapView() {
     Math.floor((seconds % 3600) / 60)
   ).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
 
+  const stats = [
+    { label: "DISTANCE", value: `${km.toFixed(2)} km` },
+    { label: "DURATION", value: time },
+    { label: "PACE", value: `${pace} /km` },
+  ];
+
   return (
     <div style={{ color: "#f5f5f5", width: "100%" }}>
       <div
@@ -185,11 +198,7 @@ export default function MapView() {
           marginBottom: 14,
         }}
       >
-        {[
-          { label: "DISTANCE", value: `${km.toFixed(2)} km` },
-          { label: "DURATION", value: time },
-          { label: "PACE", value: `${pace} /km` },
-        ].map((item) => (
+        {stats.map((item) => (
           <div
             key={item.label}
             style={{
@@ -201,9 +210,16 @@ export default function MapView() {
               minWidth: 0,
             }}
           >
-            <div style={{ fontSize: 10, color: "#a0a8b2", marginBottom: 8 }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: "#a0a8b2",
+                marginBottom: 8,
+              }}
+            >
               {item.label}
             </div>
+
             <div
               style={{
                 fontSize: 18,
@@ -231,7 +247,11 @@ export default function MapView() {
           center={katihar}
           zoom={14}
           scrollWheelZoom
-          style={{ width: "100%", height: "100%", background: "#10151a" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            background: "#10151a",
+          }}
         >
           <FixMapSize />
           <FollowLocation position={position} />
@@ -257,7 +277,10 @@ export default function MapView() {
           {route.length > 0 && (
             <Polyline
               positions={route}
-              pathOptions={{ color: "#ff6b2c", weight: 5 }}
+              pathOptions={{
+                color: "#ff6b2c",
+                weight: 5,
+              }}
             />
           )}
 
@@ -338,11 +361,17 @@ export default function MapView() {
         </button>
       </div>
 
-      <p style={{ fontSize: 11, color: "#929aa4", lineHeight: 1.6 }}>
+      <p
+        style={{
+          fontSize: 11,
+          color: "#929aa4",
+          lineHeight: 1.6,
+          marginTop: 12,
+        }}
+      >
         GPS tracking requires location permission and an HTTPS connection.
-        Keep this page open during your activity. Your activity is currently
-        stored only in this page; it is not yet saved to an account or shared
-        with a leaderboard.
+        Keep this page open during your activity. Activities are not yet
+        saved to an account or shared with a leaderboard.
       </p>
     </div>
   );
