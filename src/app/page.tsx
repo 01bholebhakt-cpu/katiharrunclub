@@ -54,7 +54,9 @@ export default function Home() {
           <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
         </nav>
 
-        <a className="top-cta" href="#start">LET&apos;S MOVE <ArrowUpRight size={15} /></a>
+        <a className="top-cta" href="#start">
+          LET&apos;S MOVE <ArrowUpRight size={15} />
+        </a>
 
         <button
           className="menu-toggle"
@@ -102,7 +104,11 @@ export default function Home() {
             <div className="avatar-stack">
               <span>A</span><span>R</span><span>K</span><span>+</span>
             </div>
-            <p><strong>Katihar starts here.</strong><br />Your next personal best awaits.</p>
+            <p>
+              <strong>Katihar starts here.</strong>
+              <br />
+              Your next personal best awaits.
+            </p>
           </div>
         </div>
 
@@ -112,73 +118,26 @@ export default function Home() {
               <span className="mini-label">THE CITY GRID</span>
               <h2>Katihar, Bihar</h2>
             </div>
-            <span className="map-status"><span className="live-dot" /> MAP PREVIEW</span>
+            <span className="map-status">
+              <span className="live-dot" /> CITY SPOTLIGHT
+            </span>
           </div>
 
-          <div className="map-art">
-            <svg className="map-lines" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse">
-                  <path d="M 35 0 L 0 0 0 35" fill="none" stroke="#30363c" strokeWidth="0.7" />
-                </pattern>
-                <linearGradient id="route" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#ff6b2c" />
-                  <stop offset="100%" stopColor="#ffb06e" />
-                </linearGradient>
-              </defs>
-              <rect width="600" height="500" fill="url(#grid)" />
-              <g fill="none" stroke="#3a4249" strokeWidth="5" strokeLinecap="round">
-                <path d="M-20 100 L150 150 L230 80 L370 125 L620 40" />
-                <path d="M-20 245 L100 200 L240 260 L360 210 L620 280" />
-                <path d="M35 520 L90 360 L180 300 L210 180 L300 -20" />
-                <path d="M240 520 L300 390 L390 325 L440 210 L500 -20" />
-                <path d="M-20 420 L140 410 L260 450 L400 410 L620 450" />
-              </g>
-              <g fill="none" stroke="#242b31" strokeWidth="2">
-                <path d="M-10 130 L145 178 L245 112 L365 152 L610 65" />
-                <path d="M-10 270 L95 226 L230 285 L375 238 L610 305" />
-                <path d="M50 510 L110 380 L198 320 L228 195 L320 -10" />
-                <path d="M260 510 L320 410 L410 340 L460 225 L520 -10" />
-                <path d="M-10 395 L135 390 L250 430 L410 390 L610 430" />
-              </g>
-              <path d="M90 360 C140 320 145 250 230 260 S340 330 390 245 S445 170 500 155" fill="none" stroke="#ff6b2c" strokeWidth="3" strokeDasharray="7 7" opacity="0.35" />
-              <path d="M90 360 C140 320 145 250 230 260 S340 330 390 245 S445 170 500 155" fill="none" stroke="url(#route)" strokeWidth="2.5" strokeLinecap="round" />
-              <g fill="#ff6b2c">
-                <circle cx="90" cy="360" r="5" />
-                <circle cx="230" cy="260" r="5" />
-                <circle cx="390" cy="245" r="5" />
-                <circle cx="500" cy="155" r="5" />
-              </g>
-            </svg>
-
-            <div className="map-label label-one"><MapPin size={12} /> KATIHAR</div>
-            <div className="map-label label-two">YOUR ROUTE <span>↗</span></div>
-
-            <div className="map-player player-one">
-              <span className="player-avatar">A</span>
-              <span className="player-caption">Runner A</span>
-            </div>
-            <div className="map-player player-two">
-              <span className="player-avatar avatar-green">R</span>
-              <span className="player-caption">Runner B</span>
-            </div>
-            <div className="map-player player-three">
-              <span className="player-avatar avatar-blue">K</span>
-            </div>
-
-            <div className="map-center-marker">
-              <Navigation size={17} fill="currentColor" />
-            </div>
-
-            <div className="map-legend">
-              <span><i className="legend-orange" /> ROUTE</span>
-              <span><i className="legend-white" /> PLAYERS</span>
-            </div>
-          </div>
+          <img
+            src="/katihar-run-club.png"
+            alt="Katihar Junction and local railway overbridge at night"
+            style={{
+              display: "block",
+              width: "100%",
+              height: "auto",
+              borderRadius: "12px",
+              marginBottom: "20px",
+            }}
+          />
 
           <div className="map-footer">
-            <span><MapPin size={14} /> KATIHAR, IN</span>
-            <span>INTERACTIVE MAP COMING NEXT <ArrowUpRight size={14} /></span>
+            <span><MapPin size={14} /> KATIHAR, BIHAR, INDIA</span>
+            <span>OUR CITY. OUR CLUB. <ArrowUpRight size={14} /></span>
           </div>
         </div>
       </section>
@@ -205,13 +164,23 @@ export default function Home() {
       <section className="competition-section" id="leaderboard">
         <div className="section-heading">
           <div>
-            <div className="eyebrow"><span className="live-dot" /> THE LOCAL COMPETITION</div>
+            <div className="eyebrow">
+              <span className="live-dot" /> THE LOCAL COMPETITION
+            </div>
             <h2>THE CITY <span>LEADERBOARD.</span></h2>
             <p>Every kilometre brings you closer to the top.</p>
           </div>
           <div className="leaderboard-tabs">
             <button className="tab-active">WEEKLY</button>
-            <button onClick={() => setNotice("Monthly rankings will be enabled when the real leaderboard backend is connected.")}>MONTHLY</button>
+            <button
+              onClick={() =>
+                setNotice(
+                  "Monthly rankings will be enabled when the real leaderboard backend is connected."
+                )
+              }
+            >
+              MONTHLY
+            </button>
           </div>
         </div>
 
@@ -234,16 +203,23 @@ export default function Home() {
                   <small>{person.area}</small>
                 </span>
               </div>
-              <strong className="distance-value">{person.distance} <small>KM</small></strong>
+              <strong className="distance-value">
+                {person.distance} <small>KM</small>
+              </strong>
               <span className={person.change.startsWith("+") ? "rank-up" : "rank-down"}>
-                {person.change.startsWith("+") ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
+                {person.change.startsWith("+") ? (
+                  <ArrowUpRight size={15} />
+                ) : (
+                  <ArrowDownRight size={15} />
+                )}
                 {person.change}
               </span>
             </div>
           ))}
 
           <div className="leaderboard-disclaimer">
-            <Users size={14} /> SAMPLE PREVIEW DATA — REAL ATHLETES WILL APPEAR AFTER ACCOUNTS AND TRACKING ARE CONNECTED.
+            <Users size={14} />
+            SAMPLE PREVIEW DATA — THESE ARE NOT LIVE ATHLETE RESULTS.
           </div>
         </div>
       </section>
@@ -252,13 +228,22 @@ export default function Home() {
         <div className="session-copy">
           <div className="eyebrow">YOUR NEXT SESSION</div>
           <h2>OWN YOUR <span>PACE.</span></h2>
-          <p>Whether you walk for your health or run for a new personal best, every session belongs on your record.</p>
+          <p>
+            Whether you walk for your health or run for a new personal best,
+            every session belongs on your record.
+          </p>
 
           <div className="mode-selector">
-            <button className={mode === "RUN" ? "mode-selected" : ""} onClick={() => setMode("RUN")}>
+            <button
+              className={mode === "RUN" ? "mode-selected" : ""}
+              onClick={() => setMode("RUN")}
+            >
               <Zap size={16} /> RUN
             </button>
-            <button className={mode === "WALK" ? "mode-selected" : ""} onClick={() => setMode("WALK")}>
+            <button
+              className={mode === "WALK" ? "mode-selected" : ""}
+              onClick={() => setMode("WALK")}
+            >
               <Footprints size={16} /> WALK
             </button>
           </div>
@@ -281,14 +266,19 @@ export default function Home() {
             <div><small>AVG. PACE</small><strong>--:--</strong></div>
             <div><small>CALORIES</small><strong>--</strong></div>
           </div>
-          <div className="session-card-bottom"><Activity size={15} /> GPS TRACKING NOT CONNECTED YET</div>
+          <div className="session-card-bottom">
+            <Activity size={15} /> GPS TRACKING NOT CONNECTED YET
+          </div>
         </div>
       </section>
 
       <footer className="footer">
         <a className="brand-lockup" href="#">
           <span className="brand-symbol">K</span>
-          <span><strong>KATIHAR <b>RUN CLUB</b></strong><small>YOUR CITY. YOUR PACE.</small></span>
+          <span>
+            <strong>KATIHAR <b>RUN CLUB</b></strong>
+            <small>YOUR CITY. YOUR PACE.</small>
+          </span>
         </a>
         <p>MADE FOR THE STREETS OF KATIHAR, BIHAR.</p>
         <span className="footer-mark">KRC © 2026</span>
